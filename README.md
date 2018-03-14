@@ -6,7 +6,7 @@ Práctica desarrollada para la asignatura _Tipología y ciclo de vida de los dat
 
 ## Miembros del equipo
 
-**Rubén Salamanqués Ballesteros**
+**Rubén Salamanqués Ballesteros**<br />
 **Ricardo Pardo Calvo**
 
 ## Ficheros del código fuente
