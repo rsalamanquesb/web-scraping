@@ -1,4 +1,9 @@
-#This is the main code document
-print("This is the main code")
+from scraper import ReservasHidraulicas
 
-print("New print, testing PyCharm")
+#This is the main code document
+print("Inicio \n")
+
+scraper = ReservasHidraulicas();
+scraper.scrape();
+
+print("\n Fin")
