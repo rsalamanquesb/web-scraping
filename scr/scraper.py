@@ -20,9 +20,9 @@ class ReservasHidraulicas:
 
         return texto
 
-    def scrape(self):
+    def tratarURL(self, url):
 
-        html = urlopen(self.url3).read()
+        html = urlopen(self.url).read()
 
         cabecera1 = []
         cabecera2 = []
@@ -30,36 +30,42 @@ class ReservasHidraulicas:
 
         soup = BeautifulSoup(html, 'html.parser')
 
-        table = soup.find('table', {"width" : "90%", "cellspacing" : "1", "cellpadding" : "1", "border" : 0, "align" : "center"})
+        table = soup.find('table',
+                          {"width": "90%", "cellspacing": "1", "cellpadding": "1", "border": 0, "align": "center"})
 
         tr = table.find_all('tr')
 
-        for i in range (0, len(tr)):
+        for i in range(0, len(tr)):
 
-            #Inicialización para el bucle tr
+            # Inicialización para el bucle tr
             td = tr[i].find_all('td')
             texto = ''
             linea = []
 
-            for n in range (0, len(td)):
+            for n in range(0, len(td)):
                 if i == 0:
-                    #Rellenar la cabecera1
+                    # Rellenar la cabecera1
                     cabecera1.append(self.tratarTexto(td[n].text))
                 elif i == 1:
-                    #Rellenar la cabecera2
+                    # Rellenar la cabecera2
                     cabecera2.append(self.tratarTexto(td[n].text))
                 else:
-                    #Rellenar datos de la fila
+                    # Rellenar datos de la fila
                     linea.append(self.tratarTexto(td[n].text))
 
             if i > 1:
-                #Añadir fila a la matriz de filas
+                # Añadir fila a la matriz de filas
                 datos = datos + [linea]
 
-        #Obtener la zona hidrográfica
+        # Obtener la zona hidrográfica
         zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
 
         print(zona)
         print(cabecera1)
         print(cabecera2)
         print(datos)
+
+
+    def scrape(self):
+
+        self.tratarURL(self.url2)
