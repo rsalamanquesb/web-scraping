@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Práctica desarrollada para la asignatura _Tipología y ciclo de vida de los datos_, dentro del Máster en Ciencia de Datos de la Universitat Oberta de Catalunya (UOC). Se aplicarán técnicas de _web scraping_ utilizando el lenguaje  Python para obtener información contenida en la web _XXXXXXXXXX_ y generar un _dataset_ con datos que puedan ser utilizados posteriormente en un proyecto de minería de datos.
+Práctica desarrollada para la asignatura _Tipología y ciclo de vida de los datos_, dentro del Máster en Ciencia de Datos de la Universitat Oberta de Catalunya (UOC). Se aplicarán técnicas de _web scraping_ utilizando el lenguaje  Python para obtener información contenida en la web del _Boletín Hidrográfico Nacional_ y generar un _dataset_ con datos que puedan ser utilizados posteriormente en un proyecto de minería de datos.
 
 ## Integrantes del equipo
 
@@ -11,6 +11,8 @@ Práctica desarrollada para la asignatura _Tipología y ciclo de vida de los dat
 
 ## Ficheros del código fuente
 
+ - **src/main.py:** Lanzador del programa. Controla el inicio del proceso.
+ - **src/scraper.py:** Contiene el código necesario para obtener los datos de la web del [Boletín Hidrográfico Nacional.](http://eportal.mapama.gob.es/BoleHWeb/) 
 
 ## Bibliografía
 
