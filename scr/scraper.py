@@ -9,7 +9,7 @@ url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?scree
 	'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
 
 
-html = urlopen(url3).read()
+html = urlopen(url).read()
 
 cabecera1 = []
 cabecera2 = []
@@ -17,9 +17,9 @@ datos = []
 
 soup = BeautifulSoup(html, 'html.parser')
 
-table = soup.find_all('table')
+table = soup.find('table', {"width" : "90%", "cellspacing" : "1", "cellpadding" : "1", "border" : 0, "align" : "center"})
 
-tr = table[14].find_all('tr')
+tr = table.find_all('tr')
 
 for i in range (0, len(tr)):
 
