@@ -5,6 +5,8 @@ from scraper import ReservasHidraulicas
 print("Inicio \n")
 
 scraper = ReservasHidraulicas();
-scraper.scrape();
+#scraper.scrape();
+scraper.cargaColeccionURL();
+scraper.tratarColeccionURL();
 
 print("\n Fin")
