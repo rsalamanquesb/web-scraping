@@ -127,24 +127,3 @@ class ReservasHidraulicas:
 
         for n in range(0, len(self.coleccionURL)):
             self.scrape(self.coleccionURL[n])
-
-
-    def __get_accidents_links(self, html):
-        bs = BeautifulSoup(html, 'html.parser')
-        tds = bs.findAll('td')
-        accidents_links = []
-        for td in tds:
-            # Has this <td> element an <a> child?
-            a = td.next_element.next_element
-            if a.name == 'a':
-                href = a['href']
-                # Preppend '/' if needed
-                if href[0] != '/':
-                    href = '/' + href
-                # Extract year
-                year = re.search('[0-9]{4}', href).group(0)
-                # Preppend year
-                href = '/' + year + href
-                accidents_links.append(href)
-
-        return accidents_links
