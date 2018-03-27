@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+import re
+import numpy as np
+import pandas as pd
 
 from ipwhois import IPWhois
 
@@ -12,7 +15,41 @@ class ReservasHidraulicas:
             'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Occidental&bh_amb_id=12&bh_date='
         self.url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
             'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
-        self.coleccionURL = []
+
+        #self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=10&bh_year=2018&bh_date=02/03/2018'
+
+        #A la urlBase habrá que añadirle las fechas uqe introduzca el usuario
+        self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=10&bh_year=2018&bh_date='
+        self.fechaIni = '2018-02-27'
+        self.fechaFin = '2018-03-05'
+        self.fechas = []
+        self.coleccionURLdePartida = []
+        self.coleccionURLconDatos = []
+
+    def cargarArrayFechas(self):
+
+        fechasAux = np.arange(self.fechaIni, self.fechaFin, dtype='datetime64[D]')
+
+        for fecha in fechasAux:
+            #print(fecha)
+            ts = pd.to_datetime(str(fecha))
+            #print(ts)
+            fechaFormateada = ts.strftime('%d/%m/%Y')
+            self.fechas.append(fechaFormateada)
+            #print(fechaFormateada)
+
+    def get_html(self, url):
+        html = urlopen(url).read()
+        return html
+
+    def cargarColeccionURLdePartida(self):
+
+        self.cargarArrayFechas()
+
+        for fecha in self.fechas:
+            auxUrlBase = self.urlBase+fecha
+            print("Agregada URL para búsqueda: " + auxUrlBase)
+            self.coleccionURLdePartida.append(auxUrlBase)
 
     def tratarTexto(self, texto):
 
@@ -90,3 +127,24 @@ class ReservasHidraulicas:
 
         for n in range(0, len(self.coleccionURL)):
             self.scrape(self.coleccionURL[n])
+
+
+    def __get_accidents_links(self, html):
+        bs = BeautifulSoup(html, 'html.parser')
+        tds = bs.findAll('td')
+        accidents_links = []
+        for td in tds:
+            # Has this <td> element an <a> child?
+            a = td.next_element.next_element
+            if a.name == 'a':
+                href = a['href']
+                # Preppend '/' if needed
+                if href[0] != '/':
+                    href = '/' + href
+                # Extract year
+                year = re.search('[0-9]{4}', href).group(0)
+                # Preppend year
+                href = '/' + year + href
+                accidents_links.append(href)
+
+        return accidents_links
