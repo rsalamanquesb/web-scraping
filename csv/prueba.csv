@@ -1,65 +1,65 @@
-Zona Hidrográfica;Embalses;Ríos;AguaEmbalsada (hm3) Capacidad;AguaEmbalsada (hm3) Actual;AguaEmbalsada (hm3) (+ / -)SemanaAnterior;EnergíaDisponible GWh Capacidad;EnergíaDisponible GWh Actual
-Cantábrico Oriental;Añarbe;Añarbe;38;34;0;0;0
-Cantábrico Oriental;Ibiur;Ibiur;8;8;0;0;0
-Cantábrico Oriental;Ordunte;Ordunte;22;22;0;0;0
-Cantábrico Oriental;San Antón;Endara;5;5;0;0;0
-Cantábrico Occidental;Alfilorios;Barrea;8;8;0;0;0
-Cantábrico Occidental;*       Alsa - Mediajo;Torina;22;21;0;27;17
-Cantábrico Occidental;*       Arbón;Navia;41;37;0;1;1
-Cantábrico Occidental;*       Barca, La;Narcea;34;13;-2;3;0
-Cantábrico Occidental;*       Cohilla, La;Nansa;12;10;0;16;14
-Cantábrico Occidental;*       Doiras;Navia;97;88;2;19;16
-Cantábrico Occidental;Rioseco;Nalón;4;2;-1;0;0
-Cantábrico Occidental;*       Salime;Navia;266;243;19;104;94
-Cantábrico Occidental;Tanes;Nalón;34;26;-2;6;4
-Tajo;Aceña;Aceña;24;13;3;0;0
-Tajo;*       Alcántara;Tajo;3.160;2.502;269;791;552
-Tajo;Alcorlo;Bornova;180;79;15;0;0
-Tajo;*       Almoguera;Tajo;7;6;0;2;1
-Tajo;Atance, El;Salado;35;17;3;0;0
-Tajo;Atazar, El;Lozoya;426;273;18;0;0
-Tajo;*       Azután;Tajo;113;70;-3;59;31
-Tajo;Baños;Baños;41;23;3;0;0
-Tajo;Beleña;Sorbe;53;43;-2;0;0
-Tajo;*       Bolarque;Tajo;31;29;4;15;13
-Tajo;Borbollon;Árrago;88;68;18;30;22
-Tajo;Buendía;Guadiela;1.639;227;36;1.515;77
-Tajo;Burguillo - Puente Nuevo;Alberche;201;153;45;218;139
-Tajo;Cáceres - Guadiloba;Guadiloba;20;18;2;0;0
-Tajo;*       Castrejón;Tajo;44;42;1;15;14
-Tajo;Castro, El;Algodor;8;2;0;0;0
-Tajo;Cazalegas;Alberche;7;6;-1;0;0
-Tajo;*       Cedillo;Tajo;260;211;-14;17;12
-Tajo;Entrepeñas;Tajo;835;162;44;782;89
-Tajo;Finisterre;Algodor;133;14;4;0;0
-Tajo;Gabriel y Galán;Alagón;911;588;123;419;190
-Tajo;Guajaraz;Guajaraz;18;15;3;0;0
-Tajo;*       Guijo de Granadilla;Alagón;13;11;-1;3;2
-Tajo;Jarosa, La;La Jarosa;7;6;2;0;0
-Tajo;Jerte - Plasencia;Jerte;59;40;2;0;0
-Tajo;*       Molino de Chincha;Guadiela;6;6;0;4;4
-Tajo;Navacerrada;Navacerrada;11;9;1;0;0
-Tajo;Navalcán;Guayerbas;34;30;1;0;0
-Tajo;Navamuño;Angostura;14;10;2;0;0
-Tajo;Pálmaces;Cañamares;31;21;2;0;0
-Tajo;Pardo, El;Manzanares;43;22;8;0;0
-Tajo;Picadas;Alberche;15;14;-1;9;8
-Tajo;Pinilla;Lozoya;38;33;6;0;0
-Tajo;Portaje;Fresnedilla;23;14;2;0;0
-Tajo;Portiña, La;Portiña;5;2;1;0;0
-Tajo;Puentes Viejas;Lozoya;53;44;3;0;0
-Tajo;Riosequillo;Lozoya;50;41;4;0;0
-Tajo;Rivera de Gata;Rivera de Gata;49;40;4;0;0
-Tajo;Rosarito;Tiétar;82;73;3;0;0
-Tajo;Salor;Salor;14;7;3;0;0
-Tajo;San Juan;Alberche;138;79;29;104;39
-Tajo;Santillana;Manzanares;91;62;11;0;0
-Tajo;Tajera, La;Tajuña;64;8;3;0;0
-Tajo;Torcón;Torcón;7;6;0;0;0
-Tajo;*       Torrejón (Tajo - Tietar);Tiétar;188;174;0;25;17
-Tajo;Vado, El;Jarama;56;48;5;0;0
-Tajo;*       Valdecañas;Tajo;1.446;1.192;227;664;490
-Tajo;Valdeobispo;Alagón;53;47;-3;14;11
-Tajo;Valmayor;Aulencia;124;59;7;0;0
-Tajo;Vellón,El-(Pedrezuela);Guadalix;41;35;7;0;0
-Tajo;Villar, El;Lozoya;23;23;3;0;0
+Zona Hidrográfica;Embalse Hidroeléctrico;Embalses;Ríos;AguaEmbalsada (hm3) Capacidad;AguaEmbalsada (hm3) Actual;AguaEmbalsada (hm3) (+ / -)SemanaAnterior;EnergíaDisponible GWh Capacidad;EnergíaDisponible GWh Actual;
+Cantábrico Oriental;NO;Añarbe;Añarbe;38;34;0;0;0;
+Cantábrico Oriental;NO;Ibiur;Ibiur;8;8;0;0;0;
+Cantábrico Oriental;NO;Ordunte;Ordunte;22;22;0;0;0;
+Cantábrico Oriental;NO;San Antón;Endara;5;5;0;0;0;
+Cantábrico Occidental;NO;Alfilorios;Barrea;8;8;0;0;0;
+Cantábrico Occidental;SI;Alsa - Mediajo;Torina;22;21;0;27;17;
+Cantábrico Occidental;SI;Arbón;Navia;41;37;0;1;1;
+Cantábrico Occidental;SI;Barca, La;Narcea;34;13;-2;3;0;
+Cantábrico Occidental;SI;Cohilla, La;Nansa;12;10;0;16;14;
+Cantábrico Occidental;SI;Doiras;Navia;97;88;2;19;16;
+Cantábrico Occidental;NO;Rioseco;Nalón;4;2;-1;0;0;
+Cantábrico Occidental;SI;Salime;Navia;266;243;19;104;94;
+Cantábrico Occidental;NO;Tanes;Nalón;34;26;-2;6;4;
+Tajo;NO;Aceña;Aceña;24;13;3;0;0;
+Tajo;SI;Alcántara;Tajo;3.160;2.502;269;791;552;
+Tajo;NO;Alcorlo;Bornova;180;79;15;0;0;
+Tajo;SI;Almoguera;Tajo;7;6;0;2;1;
+Tajo;NO;Atance, El;Salado;35;17;3;0;0;
+Tajo;NO;Atazar, El;Lozoya;426;273;18;0;0;
+Tajo;SI;Azután;Tajo;113;70;-3;59;31;
+Tajo;NO;Baños;Baños;41;23;3;0;0;
+Tajo;NO;Beleña;Sorbe;53;43;-2;0;0;
+Tajo;SI;Bolarque;Tajo;31;29;4;15;13;
+Tajo;NO;Borbollon;Árrago;88;68;18;30;22;
+Tajo;NO;Buendía;Guadiela;1.639;227;36;1.515;77;
+Tajo;NO;Burguillo - Puente Nuevo;Alberche;201;153;45;218;139;
+Tajo;NO;Cáceres - Guadiloba;Guadiloba;20;18;2;0;0;
+Tajo;SI;Castrejón;Tajo;44;42;1;15;14;
+Tajo;NO;Castro, El;Algodor;8;2;0;0;0;
+Tajo;NO;Cazalegas;Alberche;7;6;-1;0;0;
+Tajo;SI;Cedillo;Tajo;260;211;-14;17;12;
+Tajo;NO;Entrepeñas;Tajo;835;162;44;782;89;
+Tajo;NO;Finisterre;Algodor;133;14;4;0;0;
+Tajo;NO;Gabriel y Galán;Alagón;911;588;123;419;190;
+Tajo;NO;Guajaraz;Guajaraz;18;15;3;0;0;
+Tajo;SI;Guijo de Granadilla;Alagón;13;11;-1;3;2;
+Tajo;NO;Jarosa, La;La Jarosa;7;6;2;0;0;
+Tajo;NO;Jerte - Plasencia;Jerte;59;40;2;0;0;
+Tajo;SI;Molino de Chincha;Guadiela;6;6;0;4;4;
+Tajo;NO;Navacerrada;Navacerrada;11;9;1;0;0;
+Tajo;NO;Navalcán;Guayerbas;34;30;1;0;0;
+Tajo;NO;Navamuño;Angostura;14;10;2;0;0;
+Tajo;NO;Pálmaces;Cañamares;31;21;2;0;0;
+Tajo;NO;Pardo, El;Manzanares;43;22;8;0;0;
+Tajo;NO;Picadas;Alberche;15;14;-1;9;8;
+Tajo;NO;Pinilla;Lozoya;38;33;6;0;0;
+Tajo;NO;Portaje;Fresnedilla;23;14;2;0;0;
+Tajo;NO;Portiña, La;Portiña;5;2;1;0;0;
+Tajo;NO;Puentes Viejas;Lozoya;53;44;3;0;0;
+Tajo;NO;Riosequillo;Lozoya;50;41;4;0;0;
+Tajo;NO;Rivera de Gata;Rivera de Gata;49;40;4;0;0;
+Tajo;NO;Rosarito;Tiétar;82;73;3;0;0;
+Tajo;NO;Salor;Salor;14;7;3;0;0;
+Tajo;NO;San Juan;Alberche;138;79;29;104;39;
+Tajo;NO;Santillana;Manzanares;91;62;11;0;0;
+Tajo;NO;Tajera, La;Tajuña;64;8;3;0;0;
+Tajo;NO;Torcón;Torcón;7;6;0;0;0;
+Tajo;SI;Torrejón (Tajo - Tietar);Tiétar;188;174;0;25;17;
+Tajo;NO;Vado, El;Jarama;56;48;5;0;0;
+Tajo;SI;Valdecañas;Tajo;1.446;1.192;227;664;490;
+Tajo;NO;Valdeobispo;Alagón;53;47;-3;14;11;
+Tajo;NO;Valmayor;Aulencia;124;59;7;0;0;
+Tajo;NO;Vellón,El-(Pedrezuela);Guadalix;41;35;7;0;0;
+Tajo;NO;Villar, El;Lozoya;23;23;3;0;0;

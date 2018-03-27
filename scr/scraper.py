@@ -22,11 +22,24 @@ class ReservasHidraulicas:
 
         return texto
 
+    def tratarEmbalse(self, texto):
+
+        tipo = "NO"
+        embalse = texto
+        primeraletra = texto[0]
+
+        if primeraletra == "*":
+            tipo = "SI"
+            embalse = texto[1:] #Se quita el asterisco
+            embalse = embalse.strip() #Se eliminan los espacios que existían entre el asterisco y el nombre
+
+        return tipo, embalse
+
     def tratarURL(self, url):
 
         html = urlopen(url).read()
 
-        cabecera1 = []
+        cabecera = []
 
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -47,32 +60,43 @@ class ReservasHidraulicas:
             for n in range(0, len(td)):
                 if i == 0:
                     if n == 0:
-                        cabecera1.append("Zona Hidrográfica")
+                        cabecera.append("Zona Hidrográfica")
+                        cabecera.append("Embalse Hidroeléctrico")
                     # Rellenar la cabecera1 con la primera fila
-                    cabecera1.append(self.tratarTexto(td[n].text))
+                    cabecera.append(self.tratarTexto(td[n].text))
 
                 elif i == 1:
                     # Rellenar la cabecera1 con la segunda fila
                     # Se concatena con el título superior
                     if n in (0,1,2):
-                        cabecera1.append(cabecera1[3]+" "+self.tratarTexto(td[n].text))
+                        cabecera.append(cabecera[4]+" "+self.tratarTexto(td[n].text))
                     elif n in (3,4):
-                        cabecera1.append(cabecera1[4]+" "+self.tratarTexto(td[n].text))
+                        cabecera.append(cabecera[5]+" "+self.tratarTexto(td[n].text))
                 else:
                     #Cada 10 lineas la página pinta una vacía para facilitar la legibilidad
                     if len(self.tratarTexto(td[n].text)) > 0:
+
+                        # En el dato de la primera columna se obtiene si el embalse
+                        # es o no hidroeléctrico
                         if n == 0:
                             linea.append(zona)
-                        # Rellenar datos de la fila
-                        linea.append(self.tratarTexto(td[n].text))
+                            tipo, embalse = self.tratarEmbalse(self.tratarTexto(td[n].text))
+
+                            # Rellenar datos de la fila
+                            linea.append(tipo)
+                            linea.append(embalse)
+
+                        elif n > 0:
+                            # Rellenar datos de la fila
+                            linea.append(self.tratarTexto(td[n].text))
 
             #Si todavía no hay datos guardados y hemos guardado ya las cabeceras
             if len(self.datos) == 0 and i == 1:
                 #Se eliminan los elementos innecesarios de la cabecera
-                cabecera1.pop(3)
-                cabecera1.pop(3)
+                cabecera.pop(4)
+                cabecera.pop(4)
                 #Se guarda la cabecera
-                self.datos = self.datos + [cabecera1]
+                self.datos = self.datos + [cabecera]
 
             #Si es una linea de datos y no está vacía
             if i > 1 and len(linea)>0:
