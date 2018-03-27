@@ -16,40 +16,43 @@ class ReservasHidraulicas:
         self.url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
             'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
 
-        #self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=10&bh_year=2018&bh_date=02/03/2018'
+        #A la urlBase habrá que añadirle las fechas que introduzca el usuario, la cadena YYYYYYY hay que sustituirla por el año de la fecha a tratar
+        self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=10&bh_year=YYYYYYY&bh_date='
 
-        #A la urlBase habrá que añadirle las fechas uqe introduzca el usuario
-        self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=10&bh_year=2018&bh_date='
-        self.fechaIni = '2018-02-27'
-        self.fechaFin = '2018-03-05'
-        self.fechas = []
+        ###http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&
+        # bh_number=10&bh_year=2018&bh_amb_name=Cant%E1brico%20Oriental&bh_amb_id=17&bh_date=27/02/2018
+
+        #Arrays de datos para el tratamiento de información
         self.coleccionURLdePartida = []
         self.coleccionURLconDatos = []
 
-    def cargarArrayFechas(self):
+        #Las fechas las definimos a mano, en una versión osterior, será el usuario el que introduzca el periodo
+        self.fechaIni = '2018-02-27'
+        self.fechaFin = '2018-03-05'
 
-        fechasAux = np.arange(self.fechaIni, self.fechaFin, dtype='datetime64[D]')
+    def cargarColeccionURLdePartida(self):
+
+        ##El primer paso será cargar un array con un intervalo de fechas a partir de fecha inicio y fecha fin
+
+        fechas = [] #array de fechas con el formato necesario para la url
+        fechasAux = np.arange(self.fechaIni, self.fechaFin, dtype='datetime64[D]') #generación de fechas como datetime64[D]
 
         for fecha in fechasAux:
-            #print(fecha)
+            fecha_aux = pd.to_datetime(str(fecha))
+            fechaFormateada = fecha_aux.strftime('%d/%m/%Y')
+            fechas.append(fechaFormateada) #almacenamos la fecha con el formato adecuado para su posterior tratamiento
+
+        ##Una vez que tenemos relleno el array de fechas, vamos generando las url "principales"
+        for fecha in fechas:
             ts = pd.to_datetime(str(fecha))
-            #print(ts)
-            fechaFormateada = ts.strftime('%d/%m/%Y')
-            self.fechas.append(fechaFormateada)
-            #print(fechaFormateada)
+            año = ts.strftime('%Y')
+            auxUrlBase = self.urlBase.replace("YYYYYYY", año)+fecha
+            print("Agregada URL para búsqueda: " + auxUrlBase)
+            self.coleccionURLdePartida.append(auxUrlBase)
 
     def get_html(self, url):
         html = urlopen(url).read()
         return html
-
-    def cargarColeccionURLdePartida(self):
-
-        self.cargarArrayFechas()
-
-        for fecha in self.fechas:
-            auxUrlBase = self.urlBase+fecha
-            print("Agregada URL para búsqueda: " + auxUrlBase)
-            self.coleccionURLdePartida.append(auxUrlBase)
 
     def tratarTexto(self, texto):
 
