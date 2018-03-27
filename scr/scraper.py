@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-import re
 import numpy as np
 import pandas as pd
 
@@ -26,8 +25,8 @@ class ReservasHidraulicas:
         self.coleccionURLdePartida = []
         self.coleccionURLconDatos = []
 
-        #Las fechas las definimos a mano, en una versión osterior, será el usuario el que introduzca el periodo
-        self.fechaIni = '2018-02-27'
+        #Las fechas las definimos a mano. En una versión posterior, será el usuario el que introduzca el periodo
+        self.fechaIni = '2018-03-02'
         self.fechaFin = '2018-03-05'
 
     def cargarColeccionURLdePartida(self):
@@ -42,7 +41,7 @@ class ReservasHidraulicas:
             fechaFormateada = fecha_aux.strftime('%d/%m/%Y')
             fechas.append(fechaFormateada) #almacenamos la fecha con el formato adecuado para su posterior tratamiento
 
-        ##Una vez que tenemos relleno el array de fechas, vamos generando las url "principales"
+        ##Una vez que tenemos relleno el array de fechas, vamos generando las url "principales" y las almacenamos en un array
         for fecha in fechas:
             ts = pd.to_datetime(str(fecha))
             año = ts.strftime('%Y')
@@ -50,9 +49,50 @@ class ReservasHidraulicas:
             print("Agregada URL para búsqueda: " + auxUrlBase)
             self.coleccionURLdePartida.append(auxUrlBase)
 
-    def get_html(self, url):
-        html = urlopen(url).read()
-        return html
+    def cargarURLconDatos(self):
+
+        print("\n##############Comienza la carga de URL con datos##############\n")
+        for url in self.coleccionURLdePartida:
+
+            html = urlopen(url).read()
+            soup = BeautifulSoup(html, 'html.parser')
+
+            table = soup.find('table',
+                              {"width": "90%", "cellspacing": "1", "cellpadding": "1", "border": 0, "align": "center"})
+
+            tr = table.find_all('tr')
+
+            for i in range(0, len(tr)):
+
+                # Inicialización para el bucle tr
+                td = tr[i].find_all('td')
+                linea = []
+
+                for n in range(0, len(td)):
+                    print(n)
+
+            #         if i == 0:
+            #             # Rellenar la cabecera1
+            #             cabecera1.append(self.tratarTexto(td[n].text))
+            #         elif i == 1:
+            #             # Rellenar la cabecera2
+            #             cabecera2.append(self.tratarTexto(td[n].text))
+            #         else:
+            #             # Rellenar datos de la fila
+            #             linea.append(self.tratarTexto(td[n].text))
+            #
+            #     if i > 1:
+            #         # Añadir fila a la matriz de filas
+            #         datos = datos + [linea]
+            #
+            # # Obtener la zona hidrográfica
+            # zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
+
+            # # Imprimimos la información obtenida de la url tratada
+            # print(zona)
+            # print(cabecera1)
+            # print(cabecera2)
+            # print(datos, '\n')
 
     def tratarTexto(self, texto):
 
@@ -87,6 +127,7 @@ class ReservasHidraulicas:
 
             # Inicialización para el bucle tr
             td = tr[i].find_all('td')
+            texto = ''
             linea = []
 
             for n in range(0, len(td)):
@@ -107,16 +148,15 @@ class ReservasHidraulicas:
         # Obtener la zona hidrográfica
         zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
 
-        #Imprimimos la información obtenida de la url tratada
         print(zona)
         print(cabecera1)
         print(cabecera2)
-        print(datos,'\n')
+        print(datos)
 
-    def scrape(self,url):
+    def scrape(self):
 
         #self.printInfoURL('http://eportal.mapama.gob.es/BoleHWeb/')
-        self.tratarURL(url)
+        self.tratarURL(self.url2)
 
     def cargaColeccionURL(self):
         #Aquí vendrá el código que nos permita recorrer las webs que queremos procesar
