@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import numpy as np
 import pandas as pd
+import bleach
 
 from ipwhois import IPWhois
 
@@ -85,16 +86,32 @@ class ReservasHidraulicas:
                         # Aquí tenemos parte de la url que tendremos que usar
                         td_aux = cols[n]
                         link = td_aux.find('a').get('href')
+                        print("\nSucio:")
+                        print(link)
+
+                        # str = link
+                        # html = bleach.clean(str)
+                        # print("\nLimpio:")
+                        # print(html)
+
+                        # html = bleach.clean(link)
+                        html = link
+                        html = html.replace(' ','')
+                        html = html.replace('\r\n', '')
+                        html = html.replace('javascript:window.location.href=', '')
+                        html = html.replace('/BoleHWeb/accion/cargador_pantalla.htm;', '')
+                        html = html[70:]
+                        print("\nLimpio con replace:")
+                        print(html)
 
                         #necesitamos quedarnos con la parte desde 'screen_code=60030' inclusive en adelante
                         #no encuentro la forma elegante de hacerlo, de momento queda así...
 
-                        link = link[-116:]
-                        print(link)
+                        #link = link[-116:]
                         # link = link.replace('+escape(,','')
                         # link = link.replace(')', '')
 
-                        print(link)
+                        #print(link)
                         # self.coleccionURLconDatos.append(link)
 
                         #base_url = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?'
