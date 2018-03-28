@@ -78,7 +78,6 @@ class ReservasHidraulicas:
 
                 # Inicialización para el bucle tr
                 cols = tr[i].find_all('td')
-                linea = []
 
                 for n in range(0, len(cols)):
                     # print(n)
@@ -89,36 +88,16 @@ class ReservasHidraulicas:
 
                         #necesitamos quedarnos con la parte desde 'screen_code=60030' inclusive en adelante
                         #no encuentro la forma elegante de hacerlo, de momento queda así...
-                        print(link)
+
                         link = link[-116:]
-                        link = link.replace('+escape(,','')
-                        link = link.replace(')', '')
+                        print(link)
+                        # link = link.replace('+escape(,','')
+                        # link = link.replace(')', '')
 
                         print(link)
-                        self.coleccionURLconDatos.append(link)
+                        # self.coleccionURLconDatos.append(link)
 
                         #base_url = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?'
-
-            #             cabecera1.append(self.tratarTexto(td[n].text))
-            #         elif i == 1:
-            #             # Rellenar la cabecera2
-            #             cabecera2.append(self.tratarTexto(td[n].text))
-            #         else:
-            #             # Rellenar datos de la fila
-            #             linea.append(self.tratarTexto(td[n].text))
-            #
-            #     if i > 1:
-            #         # Añadir fila a la matriz de filas
-            #         datos = datos + [linea]
-            #
-            # # Obtener la zona hidrográfica
-            # zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
-
-            # # Imprimimos la información obtenida de la url tratada
-            # print(zona)
-            # print(cabecera1)
-            # print(cabecera2)
-            # print(datos, '\n')
 
     def tratarTexto(self, texto):
 
