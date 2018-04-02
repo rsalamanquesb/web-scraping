@@ -28,8 +28,7 @@ class ReservasHidraulicas:
 
         # fechas = [] #array de fechas con el formato necesario para la url
         semanas = ([])  # lista de duplas semana-año para generar las url necesarias
-        fechasAux = np.arange(self.fechaIni, self.fechaFin,
-                              dtype='datetime64[D]')  # generación de fechas como datetime64[D]
+        fechasAux = np.arange(self.fechaIni, self.fechaFin, dtype='datetime64[D]')  # generación de fechas como datetime64[D]
 
         # Obtenemos las diferentes semanas dentro del intervalo de fechas que nos han introducido
         for fecha in fechasAux:
