@@ -3,6 +3,7 @@ from urllib.request import urlopen
 import numpy as np
 import pandas as pd
 
+
 class ReservasHidraulicas:
 
     def __init__(self):
