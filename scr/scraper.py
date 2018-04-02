@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-from urllib.parse import quote_plus
 import numpy as np
 import pandas as pd
 
@@ -27,7 +26,7 @@ class ReservasHidraulicas:
 
         semanas = ([])  # lista de duplas semana-año para generar las url necesarias
         fechasAux = np.arange(self.fechaIni, self.fechaFin,
-                              dtype='datetime64[D]')  # generación de fechas como datetime64[D]
+                           dtype='datetime64[D]')  # generación de fechas como datetime64[D]
 
         # Obtenemos las diferentes semanas dentro del intervalo de fechas que nos han introducido
         for fecha in fechasAux:
