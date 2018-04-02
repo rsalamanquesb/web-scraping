@@ -49,14 +49,14 @@ class ReservasHidraulicas:
 
         #Una vez que tenemos relleno el array de fechas, vamos generando las url "principales" y las almacenamos en la lista definida en self
         for sem in semanas:
-            anio = sem[0]
-            sem = sem[1]
+            anio = str(sem[0])
+            sem = str(sem[1])
             auxUrlBase = self.urlBase
-            auxUrlBase = auxUrlBase.replace("YEAR", str(anio))
-            auxUrlBase = auxUrlBase.replace("WEEK", str(sem))
+            auxUrlBase = auxUrlBase.replace("YEAR", anio)
+            auxUrlBase = auxUrlBase.replace("WEEK", sem)
 
             self.coleccionURLdePartida.append([anio, sem, auxUrlBase])
-            print("Agregada URL principal para búsqueda: " + str(anio) + "-" + str(sem) + " -> " + auxUrlBase)
+            print("Agregada URL principal para búsqueda: " + anio + "-" + sem + " -> " + auxUrlBase)
 
         print("\n##############Finalizada la carga de URL principales##############\n")
 
@@ -108,7 +108,7 @@ class ReservasHidraulicas:
                             urlDatos = url_parte_comun + html
 
                             self.coleccionURLconDatos.append([anio, sem, urlDatos])
-                            print("Agregada URL con datos para búsqueda: " + str(anio) + "-" + str(sem) + " -> " + urlDatos)
+                            print("Agregada URL con datos para búsqueda: " + anio + "-" + sem + " -> " + urlDatos)
 
         print("\n##############Finalizada la carga de URL con datos##############\n")
 
