@@ -4,13 +4,12 @@ from urllib.request import urlopen
 class ReservasHidraulicas:
 
     def __init__(self):
-        self.url = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Oriental&bh_amb_id=17&bh_date='
-        self.url2 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Occidental&bh_amb_id=12&bh_date='
-        self.url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
-
+        self.url = ['2018', '12', 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Oriental&bh_amb_id=17&bh_date=']
+        self.url2 = ['2018', '12', 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Occidental&bh_amb_id=12&bh_date=']
+        self.url3 = ['2018', '12', 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+            'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date=']
         self.datos = []
 
     def tratarTexto(self, texto):
@@ -37,7 +36,10 @@ class ReservasHidraulicas:
 
     def tratarURL(self, url):
 
-        html = urlopen(url).read()
+        #url es una matriz con [año, semana, link]
+        anyo = str(url[0])
+        semana = str(url[1])
+        html = urlopen(url[2]).read()
 
         cabecera = []
 
@@ -60,8 +62,12 @@ class ReservasHidraulicas:
             for n in range(0, len(td)):
                 if i == 0:
                     if n == 0:
+                        #Se rellenan columnas propias no presentes en la tabla
+                        cabecera.append("Anyo")
+                        cabecera.append("Semana")
                         cabecera.append("Zona Hidrográfica")
                         cabecera.append("Embalse Hidroeléctrico")
+
                     # Rellenar la cabecera1 con la primera fila
                     cabecera.append(self.tratarTexto(td[n].text))
 
@@ -69,9 +75,9 @@ class ReservasHidraulicas:
                     # Rellenar la cabecera1 con la segunda fila
                     # Se concatena con el título superior
                     if n in (0,1,2):
-                        cabecera.append(cabecera[4]+" "+self.tratarTexto(td[n].text))
+                        cabecera.append(cabecera[6]+" "+self.tratarTexto(td[n].text))
                     elif n in (3,4):
-                        cabecera.append(cabecera[5]+" "+self.tratarTexto(td[n].text))
+                        cabecera.append(cabecera[7]+" "+self.tratarTexto(td[n].text))
                 else:
                     #Cada 10 lineas la página pinta una vacía para facilitar la legibilidad
                     if len(self.tratarTexto(td[n].text)) > 0:
@@ -79,9 +85,11 @@ class ReservasHidraulicas:
                         # En el dato de la primera columna se obtiene si el embalse
                         # es o no hidroeléctrico
                         if n == 0:
+                            linea.append(anyo)
+                            linea.append(semana)
                             linea.append(zona)
-                            tipo, embalse = self.tratarEmbalse(self.tratarTexto(td[n].text))
 
+                            tipo, embalse = self.tratarEmbalse(self.tratarTexto(td[n].text))
                             # Rellenar datos de la fila
                             linea.append(tipo)
                             linea.append(embalse)
@@ -93,8 +101,8 @@ class ReservasHidraulicas:
             #Si todavía no hay datos guardados y hemos guardado ya las cabeceras
             if len(self.datos) == 0 and i == 1:
                 #Se eliminan los elementos innecesarios de la cabecera
-                cabecera.pop(4)
-                cabecera.pop(4)
+                cabecera.pop(6)
+                cabecera.pop(6)
                 #Se guarda la cabecera
                 self.datos = self.datos + [cabecera]
 
