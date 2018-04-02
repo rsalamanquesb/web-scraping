@@ -108,6 +108,7 @@ class ReservasHidraulicas:
 
         print("\n##############Finalizada la carga de URL con datos##############\n")
 
+
     def tratarTexto(self, texto):
 
         texto = texto.replace(u'\xa0', '')
@@ -169,6 +170,7 @@ class ReservasHidraulicas:
                 elif i == 1:
                     # Rellenar la cabecera1 con la segunda fila
                     # Se concatena con el título superior
+
                     if n in (0, 1, 2):
                         cabecera.append(cabecera[6] + " " + self.tratarTexto(td[n].text))
                     elif n in (3, 4):
@@ -192,6 +194,7 @@ class ReservasHidraulicas:
                         elif n > 0:
                             # Rellenar datos de la fila
                             linea.append(self.tratarTexto(td[n].text))
+
 
             # Si todavía no hay datos guardados y hemos guardado ya las cabeceras
             if len(self.datos) == 0 and i == 1:
