@@ -6,9 +6,6 @@ print("Inicio \n")
 
 scraper = ReservasHidraulicas();
 
-scraper.cargarColeccionURLdePartida();
-scraper.cargarURLconDatos();
-
-# scraper.scrape();
+scraper.scrape();
 
 print("\n Fin")
