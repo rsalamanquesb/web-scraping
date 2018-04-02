@@ -8,12 +8,12 @@ class ReservasHidraulicas:
 
     def __init__(self):
 
-        self.url1 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Oriental&bh_amb_id=17&bh_date='
-        self.url2 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Occidental&bh_amb_id=12&bh_date='
-        self.url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
-            'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
+        # self.url1 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+        #     'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Oriental&bh_amb_id=17&bh_date='
+        # self.url2 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+        #     'bh_number=12&bh_year=2018&bh_amb_name=Cant%E1brico%20Occidental&bh_amb_id=12&bh_date='
+        # self.url3 = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60030&screen_language=&' \
+        #     'bh_number=12&bh_year=2018&bh_amb_name=Tajo&bh_amb_id=3&bh_date='
 
         #A la urlBase habrá que añadirle la semana y el año
         self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=WEEK&bh_year=YEAR'
@@ -44,8 +44,8 @@ class ReservasHidraulicas:
             # fechas.append(fechaFormateada) #almacenamos la fecha con el formato adecuado para su posterior tratamiento
 
             # agregamos año-semana a la lista
-            if ([anio,sem]) not in semanas:
-                semanas.append([anio,sem])
+            if ([anio, sem]) not in semanas:
+                semanas.append([anio, sem])
 
         #Una vez que tenemos relleno el array de fechas, vamos generando las url "principales" y las almacenamos en la lista definida en self
         for sem in semanas:
@@ -172,16 +172,3 @@ class ReservasHidraulicas:
         #self.tratarURL(self.url2)
         self.cargarColeccionURLdePartida();
         self.cargarURLconDatos();
-
-    def cargaColeccionURL(self):
-        #Aquí vendrá el código que nos permita recorrer las webs que queremos procesar
-
-        #Cargamos las tres url de ejemplo que tenemos
-        self.coleccionURL.append(self.url1)
-        self.coleccionURL.append(self.url2)
-        self.coleccionURL.append(self.url3)
-
-    def tratarColeccionURL(self):
-
-        for n in range(0, len(self.coleccionURL)):
-            self.scrape(self.coleccionURL[n])
