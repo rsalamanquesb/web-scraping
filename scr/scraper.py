@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import numpy as np
 import pandas as pd
-import re
-
 
 class ReservasHidraulicas:
 
@@ -26,17 +24,15 @@ class ReservasHidraulicas:
         ##El primer paso será cargar un array con un intervalo de fechas a partir de fecha inicio y fecha fin
         print("\n##############Comienza la carga de URL principales##############\n")
 
-        # fechas = [] #array de fechas con el formato necesario para la url
         semanas = ([])  # lista de duplas semana-año para generar las url necesarias
-        fechasAux = np.arange(self.fechaIni, self.fechaFin, dtype='datetime64[D]')  # generación de fechas como datetime64[D]
+        fechasAux = np.arange(self.fechaIni, self.fechaFin,
+                           dtype='datetime64[D]')  # generación de fechas como datetime64[D]
 
         # Obtenemos las diferentes semanas dentro del intervalo de fechas que nos han introducido
         for fecha in fechasAux:
             fecha_aux = pd.to_datetime(str(fecha))
             anio = fecha_aux.isocalendar()[0]  # obtenemos el año de la fecha introducida
             sem = fecha_aux.isocalendar()[1]  # obtenemos la semana de la fecha introducida
-            # fechaFormateada = fecha_aux.strftime('%d/%m/%Y')
-            # fechas.append(fechaFormateada) #almacenamos la fecha con el formato adecuado para su posterior tratamiento
 
             # agregamos año-semana a la lista
             if ([anio, sem]) not in semanas:
@@ -91,21 +87,27 @@ class ReservasHidraulicas:
                         # Con esta comprobación descartamos el primer link, que corresponde a los datos generales de la península
                         if 'name' in html:
                             # Llevamos a cabo una limpieza "manual" de los links
-                            html = html.replace(' ', '')
+                            html = html.replace(' ', '%20')
+                            html = html.replace('á', '%E1')
+                            html = html.replace('í', '%ED')
+                            html = html.replace('ú', '%FA')
+                            html = html.replace('ñ', '%F1')
                             html = html.replace('\r\n', '')
+
                             html = html.replace('javascript:window.location.href=', '')
                             html = html.replace('/BoleHWeb/accion/cargador_pantalla.htm;', '')
                             html = html[45:]
-                            html = re.sub('[^a-zA-Z0-9\n\._&=/ñ]', '', html)
-                            html = html.replace('=escape', '=')
-                            html = html.replace('ñ', 'ny')
+                            html = html.replace('\'+escape(\'', '')
+                            html = html.replace('\')+\'', '')
                             html = html[:-9]
+
                             urlDatos = url_parte_comun + html
 
                             self.coleccionURLconDatos.append([anio, sem, urlDatos])
                             print("Agregada URL con datos para búsqueda: " + anio + "-" + sem + " -> " + urlDatos)
 
         print("\n##############Finalizada la carga de URL con datos##############\n")
+
 
     def tratarTexto(self, texto):
 
@@ -135,7 +137,6 @@ class ReservasHidraulicas:
         anyo = str(url[0])
         semana = str(url[1])
         html = urlopen(url[2]).read()
-
         cabecera = []
 
         soup = BeautifulSoup(html, 'html.parser')
@@ -191,6 +192,7 @@ class ReservasHidraulicas:
                         elif n > 0:
                             # Rellenar datos de la fila
                             linea.append(self.tratarTexto(td[n].text))
+
 
             # Si todavía no hay datos guardados y hemos guardado ya las cabeceras
             if len(self.datos) == 0 and i == 1:
