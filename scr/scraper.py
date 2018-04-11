@@ -3,9 +3,9 @@ from urllib.request import urlopen
 import numpy as np
 import pandas as pd
 
-class ReservasHidraulicas:
+class ReservasHidraulicas():
 
-    def __init__(self):
+    def __init__(self, fechaini, fechafin):
 
         # A la urlBase habrá que añadirle la semana y el año
         self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=WEEK&bh_year=YEAR'
@@ -16,8 +16,10 @@ class ReservasHidraulicas:
         self.datos = []
 
         # Las fechas las definimos a mano. En una versión posterior, será el usuario el que introduzca el periodo
-        self.fechaIni = '2018-02-18'
-        self.fechaFin = '2018-03-05'
+        # self.fechaIni = '2018-02-18'
+        # self.fechaFin = '2018-03-05'
+        self.fechaIni = fechaini
+        self.fechaFin = fechafin
 
     def cargarColeccionURLdePartida(self):
 
