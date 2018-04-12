@@ -3,9 +3,9 @@ from urllib.request import urlopen
 import numpy as np
 import pandas as pd
 
-class ReservasHidraulicas:
+class ReservasHidraulicas():
 
-    def __init__(self):
+    def __init__(self, fechaini, fechafin):
 
         # A la urlBase habrá que añadirle la semana y el año
         self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=WEEK&bh_year=YEAR'
@@ -16,8 +16,10 @@ class ReservasHidraulicas:
         self.datos = []
 
         # Las fechas las definimos a mano. En una versión posterior, será el usuario el que introduzca el periodo
-        self.fechaIni = '2018-02-18'
-        self.fechaFin = '2018-03-05'
+        # self.fechaIni = '2018-02-18'
+        # self.fechaFin = '2018-03-05'
+        self.fechaIni = fechaini
+        self.fechaFin = fechafin
 
     def cargarColeccionURLdePartida(self):
 
@@ -64,49 +66,56 @@ class ReservasHidraulicas:
             sem = tupla[1]
             url = tupla[2]
 
-            html = urlopen(url).read()
-            soup = BeautifulSoup(html, 'html.parser')
+            try:
+                html = urlopen(url).read()
+                soup = BeautifulSoup(html, 'html.parser')
 
-            table = soup.find('table',
-                              {"align": "center", "border": 0, "cellpadding": "1", "cellspacing": "1"})
+                table = soup.find('table',
+                                {"align": "center", "border": 0, "cellpadding": "1", "cellspacing": "1"})
 
-            tr = table.find_all('tr')
+                tr = table.find_all('tr')
 
-            for i in range(0, len(tr)):
+            #Si ocurre algún error al obtener los datos de la URL se muestra en el log
+            except:
+                print("\n******** Error al cargar la URL: "+ url +"\n")
 
-                # Inicialización para el bucle tr
-                cols = tr[i].find_all('td')
+            #Si no ocurre ningún error se trata la URL y se guarda para examinarla luego
+            else:
+                for i in range(0, len(tr)):
 
-                for n in range(0, len(cols)):
-                    # print(n)
-                    if n == 2:
-                        # Aquí tenemos parte de la url que tendremos que usar
-                        td_aux = cols[n]
-                        html = td_aux.find('a').get('href')
+                    # Inicialización para el bucle tr
+                    cols = tr[i].find_all('td')
 
-                        # Con esta comprobación descartamos el primer link, que corresponde a los datos generales de la península
-                        if 'name' in html:
-                            # Llevamos a cabo una limpieza "manual" de los links
-                            html = html.replace(' ', '%20')
-                            html = html.replace('á', '%E1')
-                            html = html.replace('í', '%ED')
-                            html = html.replace('ú', '%FA')
-                            html = html.replace('ñ', '%F1')
-                            html = html.replace('\r\n', '')
+                    for n in range(0, len(cols)):
+                        # print(n)
+                        if n == 2:
+                            # Aquí tenemos parte de la url que tendremos que usar
+                            td_aux = cols[n]
+                            html = td_aux.find('a').get('href')
 
-                            html = html.replace('javascript:window.location.href=', '')
-                            html = html.replace('/BoleHWeb/accion/cargador_pantalla.htm;', '')
-                            html = html[45:]
-                            html = html.replace('\'+escape(\'', '')
-                            html = html.replace('\')+\'', '')
-                            html = html[:-9]
+                            # Con esta comprobación descartamos el primer link, que corresponde a los datos generales de la península
+                            if 'name' in html:
+                                # Llevamos a cabo una limpieza "manual" de los links
+                                html = html.replace(' ', '%20')
+                                html = html.replace('á', '%E1')
+                                html = html.replace('í', '%ED')
+                                html = html.replace('ú', '%FA')
+                                html = html.replace('ñ', '%F1')
+                                html = html.replace('\r\n', '')
 
-                            urlDatos = url_parte_comun + html
+                                html = html.replace('javascript:window.location.href=', '')
+                                html = html.replace('/BoleHWeb/accion/cargador_pantalla.htm;', '')
+                                html = html[45:]
+                                html = html.replace('\'+escape(\'', '')
+                                html = html.replace('\')+\'', '')
+                                html = html[:-9]
 
-                            self.coleccionURLconDatos.append([anio, sem, urlDatos])
-                            print("Agregada URL con datos para búsqueda: " + anio + "-" + sem + " -> " + urlDatos)
+                                urlDatos = url_parte_comun + html
 
-        print("\n##############Finalizada la carga de URL con datos##############\n")
+                                self.coleccionURLconDatos.append([anio, sem, urlDatos])
+                                print("Agregada URL con datos para búsqueda: " + anio + "-" + sem + " -> " + urlDatos)
+
+                print("\n##############Finalizada la carga de URL con datos##############\n")
 
 
     def tratarTexto(self, texto):
@@ -139,75 +148,82 @@ class ReservasHidraulicas:
         html = urlopen(url[2]).read()
         cabecera = []
 
-        soup = BeautifulSoup(html, 'html.parser')
+        try:
+            soup = BeautifulSoup(html, 'html.parser')
 
-        table = soup.find('table',
-                          {"width": "90%", "cellspacing": "1", "cellpadding": "1", "border": 0, "align": "center"})
+            table = soup.find('table',
+                              {"width": "90%", "cellspacing": "1", "cellpadding": "1", "border": 0, "align": "center"})
 
-        tr = table.find_all('tr')
+            tr = table.find_all('tr')
 
-        # Obtener la zona hidrográfica
-        zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
-        for i in range(0, len(tr)):
+        # Si ocurre algún error al obtener los datos de la URL se muestra en el log
+        except:
+            print("\n******** Error al consultar la URL: " + url[2] + "\n")
 
-            # Inicialización para el bucle tr
-            td = tr[i].find_all('td')
-            linea = []
+        # Si no ocurre ningún error se trata la URL y se guardan sus datos
+        else:
+            # Obtener la zona hidrográfica
+            zona = self.tratarTexto(soup.find('td', {"class": "tdsubtitulo"}).text)
+            for i in range(0, len(tr)):
 
-            for n in range(0, len(td)):
-                if i == 0:
-                    if n == 0:
-                        # Se rellenan columnas propias no presentes en la tabla
-                        cabecera.append("Anyo")
-                        cabecera.append("Semana")
-                        cabecera.append("Zona Hidrográfica")
-                        cabecera.append("Embalse Hidroeléctrico")
+                # Inicialización para el bucle tr
+                td = tr[i].find_all('td')
+                linea = []
 
-                    # Rellenar la cabecera1 con la primera fila
-                    cabecera.append(self.tratarTexto(td[n].text))
-
-                elif i == 1:
-                    # Rellenar la cabecera1 con la segunda fila
-                    # Se concatena con el título superior
-                    if n in (0, 1, 2):
-                        cabecera.append(cabecera[6] + " " + self.tratarTexto(td[n].text))
-                    elif n in (3, 4):
-                        cabecera.append(cabecera[7] + " " + self.tratarTexto(td[n].text))
-                else:
-                    # Cada 10 lineas la página pinta una vacía para facilitar la legibilidad
-                    if len(self.tratarTexto(td[n].text)) > 0:
-
-                        # En el dato de la primera columna se obtiene si el embalse
-                        # es o no hidroeléctrico
+                for n in range(0, len(td)):
+                    if i == 0:
                         if n == 0:
-                            linea.append(anyo)
-                            linea.append(semana)
-                            linea.append(zona)
+                            # Se rellenan columnas propias no presentes en la tabla
+                            cabecera.append("Anyo")
+                            cabecera.append("Semana")
+                            cabecera.append("Zona Hidrográfica")
+                            cabecera.append("Embalse Hidroeléctrico")
 
-                            tipo, embalse = self.tratarEmbalse(self.tratarTexto(td[n].text))
-                            # Rellenar datos de la fila
-                            linea.append(tipo)
-                            linea.append(embalse)
+                        # Rellenar la cabecera1 con la primera fila
+                        cabecera.append(self.tratarTexto(td[n].text))
 
-                        elif n > 0:
-                            # Rellenar datos de la fila
-                            linea.append(self.tratarTexto(td[n].text))
+                    elif i == 1:
+                        # Rellenar la cabecera1 con la segunda fila
+                        # Se concatena con el título superior
+                        if n in (0, 1, 2):
+                            cabecera.append(cabecera[6] + " " + self.tratarTexto(td[n].text))
+                        elif n in (3, 4):
+                            cabecera.append(cabecera[7] + " " + self.tratarTexto(td[n].text))
+                    else:
+                        # Cada 10 lineas la página pinta una vacía para facilitar la legibilidad
+                        if len(self.tratarTexto(td[n].text)) > 0:
+
+                            # En el dato de la primera columna se obtiene si el embalse
+                            # es o no hidroeléctrico
+                            if n == 0:
+                                linea.append(anyo)
+                                linea.append(semana)
+                                linea.append(zona)
+
+                                tipo, embalse = self.tratarEmbalse(self.tratarTexto(td[n].text))
+                                # Rellenar datos de la fila
+                                linea.append(tipo)
+                                linea.append(embalse)
+
+                            elif n > 0:
+                                # Rellenar datos de la fila
+                                linea.append(self.tratarTexto(td[n].text))
 
 
-            # Si todavía no hay datos guardados y hemos guardado ya las cabeceras
-            if len(self.datos) == 0 and i == 1:
-                # Se eliminan los elementos innecesarios de la cabecera
-                cabecera.pop(6)
-                cabecera.pop(6)
-                # Se guarda la cabecera
-                self.datos = self.datos + [cabecera]
+                # Si todavía no hay datos guardados y hemos guardado ya las cabeceras
+                if len(self.datos) == 0 and i == 1:
+                    # Se eliminan los elementos innecesarios de la cabecera
+                    cabecera.pop(6)
+                    cabecera.pop(6)
+                    # Se guarda la cabecera
+                    self.datos = self.datos + [cabecera]
 
-            # Si es una linea de datos y no está vacía
-            if i > 1 and len(linea) > 0:
-                # Añadir fila a la matriz de filas
-                self.datos = self.datos + [linea]
+                # Si es una linea de datos y no está vacía
+                if i > 1 and len(linea) > 0:
+                    # Añadir fila a la matriz de filas
+                    self.datos = self.datos + [linea]
 
-        print(len(self.datos))
+        print("Datos recopilados: " + str(len(self.datos)))
 
     def exportarCSV(self, fichero):
         file = open("../csv/" + fichero, "w+")
