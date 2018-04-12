@@ -139,7 +139,6 @@ class ReservasHidraulicas():
 
                 print("\n##############Finalizada la carga de URL con datos##############\n")
 
-
     def tratarTexto(self, texto):
 
         texto = texto.replace(u'\xa0', '')
