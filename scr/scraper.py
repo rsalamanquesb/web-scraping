@@ -2,10 +2,13 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import numpy as np
 import pandas as pd
+import time
+from datetime import datetime
+import urllib.parse
 
 class ReservasHidraulicas():
 
-    def __init__(self, fechaini, fechafin):
+    def __init__(self, fechaini, fechafin, espera):
 
         # A la urlBase habrá que añadirle la semana y el año
         self.urlBase = 'http://eportal.mapama.gob.es/BoleHWeb/accion/cargador_pantalla.htm?screen_code=60000&screen_language=&bh_number=WEEK&bh_year=YEAR'
@@ -20,6 +23,25 @@ class ReservasHidraulicas():
         # self.fechaFin = '2018-03-05'
         self.fechaIni = fechaini
         self.fechaFin = fechafin
+
+        # Segundos a esperar entre accesos al mismo dominio
+        self.espera = espera
+        # Lista para guardar el timestamp del último acceso al dominio
+        self.dominios = {}
+
+    def esperar(self, url):
+
+        # Se espera N segundos entre cada acceso al mismo dominio
+        dominio = urllib.parse.urlsplit(url).netloc # Dominio de la url
+        ult_acceso = self.dominios.get(dominio) # Último acceso al dominio
+
+        if self.espera > 0 and ult_acceso is not None:
+
+            espera_seg = self.espera - (datetime.now() - ult_acceso).seconds
+            if espera_seg > 0:
+                time.sleep(espera_seg)
+
+        self.dominios[dominio] = datetime.now()
 
     def cargarColeccionURLdePartida(self):
 
@@ -144,10 +166,13 @@ class ReservasHidraulicas():
         # url es una matriz con [año, semana, link]
         anyo = str(url[0])
         semana = str(url[1])
-        html = urlopen(url[2]).read()
         cabecera = []
 
         try:
+
+            self.espera(url[2])  # Antes de descargar la web se llama a la función espera para no sobrecargar el servidor
+            html = urlopen(url[2]).read()
+
             soup = BeautifulSoup(html, 'html.parser')
 
             table = soup.find('table',
@@ -239,4 +264,4 @@ class ReservasHidraulicas():
         for i in range(0, len(self.coleccionURLconDatos)):
             self.tratarURL(self.coleccionURLconDatos[i])
 
-        self.exportarCSV("prueba.csv")
+        self.exportarCSV("Embalses_" + self.fechaIni + "_" + self.fechaFin + ".csv")

@@ -15,7 +15,8 @@ args = parser.parse_args()
 print('Fecha inicio: '+args.fechaInicio)
 print('Fecha fin: '+args.fechaFin)
 
-scraper = ReservasHidraulicas(args.fechaInicio, args.fechaFin)
+#Se establece 1 segundo de espera
+scraper = ReservasHidraulicas(args.fechaInicio, args.fechaFin, 1)
 scraper.scrape()
 
 print("\n Fin")
