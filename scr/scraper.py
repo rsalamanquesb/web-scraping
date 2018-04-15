@@ -169,8 +169,10 @@ class ReservasHidraulicas():
         cabecera = []
 
         try:
+
             self.espera(url[2])  # Antes de descargar la web se llama a la función espera para no sobrecargar el servidor
             html = urlopen(url[2]).read()
+
             soup = BeautifulSoup(html, 'html.parser')
 
             table = soup.find('table',
