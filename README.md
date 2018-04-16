@@ -12,7 +12,23 @@ Práctica desarrollada para la asignatura _Tipología y ciclo de vida de los dat
 ## Ficheros del código fuente
 
  - **src/main.py:** Lanzador del programa. Controla el inicio del proceso.
- - **src/scraper.py:** Contiene el código necesario para obtener los datos de la web del [Boletín Hidrográfico Nacional.](http://eportal.mapama.gob.es/BoleHWeb/) 
+ - **src/scraper.py:** Contiene el código necesario para obtener los datos de la web del [Boletín Hidrográfico Nacional.](http://eportal.mapama.gob.es/BoleHWeb/)
+ 
+ El programa está desarrollado bajo Python 3. Las bibliotecas necesarias para ejecutarlo son las siguientes:
+ 
+ ```
+ pip install bs4
+ pip install urllib.request
+ pip install urllib.parse
+ pip install numpy
+ pip install pandas
+ ``` 
+ 
+ La ejecución puede llevarse a cabo en una consola de línea de comandos con la siguiente intrucción
+ ```
+ python main.py 2018-02-18 2018-03-05
+ ```
+ 
 
 ## Bibliografía
 
